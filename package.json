@@ -1,0 +1,31 @@
+{
+  "name": "simple",
+  "version": "1.0.0",
+  "description": "a Discord bot framework",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"start": "node main.js",
+	"devstart": "nodemon main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simba-fs/simple.git"
+  },
+  "keywords": [
+    "discord",
+    "bot"
+  ],
+  "author": "Simba Fs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/simba-fs/simple/issues"
+  },
+  "homepage": "https://github.com/simba-fs/simple#readme",
+  "dependencies": {
+    "discord.js": "^11.4.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  }
+}
