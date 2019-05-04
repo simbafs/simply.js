@@ -16,7 +16,7 @@ var bin = {
 var app = new Object;
 
 //setup token for glitch
-if(!(token)){
+if(process.env.BOT_TOKEN){
 	token = process.env.BOT_TOKEN;//for glitch
 }
 
@@ -28,10 +28,13 @@ client.on('ready', () => {
 });
 
 //def app.ready() require a function
-function app.ready(fun){
-	console.log(bin.ready.length);
+app.ready = function(fun){
+	bin.ready[bin.ready.length] = fun;
 }
 
 //login
-client.login(token);
+//client.login(token);
 module.exports = app;
+
+app.ready(() => {console.log("hello world");});
+console.table(bin.ready);
