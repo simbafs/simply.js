@@ -8,8 +8,7 @@ var config = "./config.json";
 
 //store all user function
 var bin = {
-	"ready": [],
-	"messenge": []
+	"message": []
 };
 
 //export module
@@ -28,13 +27,11 @@ client.on('ready', () => {
 });
 
 //def app.ready() require a function
-app.ready = function(fun){
-	bin.ready[bin.ready.length] = fun;
+app.message = function(fun){
+	bin.message.push(fun);
+
 }
 
 //login
 //client.login(token);
 module.exports = app;
-
-app.ready(() => {console.log("hello world");});
-console.table(bin.ready);
