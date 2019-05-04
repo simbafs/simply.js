@@ -6,6 +6,15 @@ var client = new Discord.Client();
 var { token } = require('./ignore/token.json');
 var config = "./config.json";
 
+//store all user function
+var bin = {
+	"ready": [],
+	"messenge": []
+};
+
+//export module
+var app = new Object;
+
 //setup token for glitch
 if(!(token)){
 	token = process.env.BOT_TOKEN;//for glitch
@@ -18,6 +27,11 @@ client.on('ready', () => {
 	console.log(`======================================================`)
 });
 
+//def app.ready() require a function
+function app.ready(fun){
+	console.log(bin.ready.length);
+}
 
 //login
 client.login(token);
+module.exports = app;
