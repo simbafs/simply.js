@@ -6,6 +6,28 @@ var client = new Discord.Client();
 var { token } = require('./ignore/token.json');
 var config = "./config.json";
 
+//router
+class Router{
+	constructor(){
+		this.bin = {};
+	}
+	add(name, fun){
+		if(!this.bin[name]){
+			this.bin[name] = new Array;
+		}
+		this.bin[name].push(fun);
+	}
+	run(name){
+		if(this.bin[name].includes(name)){
+			var argv = arguments.pop(0);
+			delete argv[0];
+			for(var i in this.bin[name]){
+				this.bin[name][i]()
+			}
+		}
+	}
+}
+
 //store all user function
 var bin = {
 	"message": [],
@@ -36,7 +58,7 @@ client.on('message', msg => {
 		var argv = msg.content.split(bin.setup.splitChar);
 		argv[0] = argv[0].substring(bin.setup.promptChar.length);
 		for(var i in bin.message){
-			bin.message[i]();
+			bin.message[i](msg, argv);
 		}
 	}
 });
@@ -55,14 +77,9 @@ app.set = function(key, val){
 client.login(token);
 module.exports = app;
 
-app.set('key','val');
-app.set('name','simba');
-
-console.log(bin.setup);
+console.table(bin.setup);
 
 app.message(()=>{console.log('hi')});
 app.message(()=>{console.log('hdddi')});
 app.message(()=>{console.log('hnheri')});
 app.message(()=>{console.log('hkiuveii')});
-
-console.log(bin.message);
