@@ -8,7 +8,11 @@ var config = "./config.json";
 
 //store all user function
 var bin = {
-	"message": []
+	"message": [],
+	"setup":{
+		"promptChar": "!",
+		"splitChar": " "
+	}
 };
 
 //export module
@@ -26,12 +30,28 @@ client.on('ready', () => {
 	console.log(`======================================================`)
 });
 
+client.on('message', msg => {
+	if(msg.content.startsWith(bin.setup.promptChar)){
+		var argv = msg.content.split(bin.setup.splitChar);
+		
+	}
+});
+
 //def app.ready() require a function
 app.message = function(fun){
 	bin.message.push(fun);
-
 }
+
+app.set = function(key, val){
+	bin.setup[key] = val;
+}
+
 
 //login
 //client.login(token);
 module.exports = app;
+
+app.set('key','val');
+app.set('name','simba');
+
+console.log(bin.setup);
