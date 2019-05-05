@@ -31,9 +31,13 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
+	console.log(`> ${msg.author.tag}@${msg.channel.name?msg.channel.name:"DM"} ${msg.content}`);
 	if(msg.content.startsWith(bin.setup.promptChar)){
 		var argv = msg.content.split(bin.setup.splitChar);
-		
+		argv[0] = argv[0].substring(bin.setup.promptChar.length);
+		for(var i in bin.message){
+			bin.message[i]();
+		}
 	}
 });
 
@@ -48,10 +52,17 @@ app.set = function(key, val){
 
 
 //login
-//client.login(token);
+client.login(token);
 module.exports = app;
 
 app.set('key','val');
 app.set('name','simba');
 
 console.log(bin.setup);
+
+app.message(()=>{console.log('hi')});
+app.message(()=>{console.log('hdddi')});
+app.message(()=>{console.log('hnheri')});
+app.message(()=>{console.log('hkiuveii')});
+
+console.log(bin.message);
