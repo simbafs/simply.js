@@ -72,6 +72,10 @@ app.set = function(key, val){
 	bin.setup[key] = val;
 }
 
+app.response = (req, res){
+	
+}
+
 
 //login
 client.login(token);
