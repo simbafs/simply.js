@@ -9,6 +9,7 @@ var config = "./config.json";
 //store all user function
 var bin = {
 	"message": [],
+	"response": {},
 	"setup":{
 		"promptChar": "!",
 		"splitChar": " "
@@ -35,10 +36,18 @@ client.on('message', msg => {
 	if(msg.content.startsWith(bin.setup.promptChar)){
 		var argv = msg.content.split(bin.setup.splitChar);
 		argv[0] = argv[0].substring(bin.setup.promptChar.length);
+		
+		//for simple.message
 		for(var i in bin.message){
 			bin.message[i](msg, argv);
 		}
+
+		//for simple.response
+		if( bin.response[argv[0]] ){
+			msg.reply(bin.response[argv[0]]);
+		}
 	}
+
 });
 
 //def app.ready() require a function
@@ -50,18 +59,14 @@ app.set = function(key, val){
 	bin.setup[key] = val;
 }
 
-app.response = (req, res){
-	
+app.response = function(req, res){	
+	bin.response[req] = res;
+}
+
+app.login = function(token){
+	client.login(token);
 }
 
 
 //login
-client.login();
 module.exports = app;
-
-console.table(bin.setup);
-
-app.message(()=>{console.log('hi')});
-app.message(()=>{console.log('hdddi')});
-app.message(()=>{console.log('hnheri')});
-app.message(()=>{console.log('hkiuveii')});
