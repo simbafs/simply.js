@@ -6,28 +6,6 @@ var client = new Discord.Client();
 var { token } = require('./ignore/token.json');
 var config = "./config.json";
 
-//router
-class Router{
-	constructor(){
-		this.bin = {};
-	}
-	add(name, fun){
-		if(!this.bin[name]){
-			this.bin[name] = new Array;
-		}
-		this.bin[name].push(fun);
-	}
-	run(name){
-		if(this.bin[name].includes(name)){
-			var argv = arguments.pop(0);
-			delete argv[0];
-			for(var i in this.bin[name]){
-				this.bin[name][i]()
-			}
-		}
-	}
-}
-
 //store all user function
 var bin = {
 	"message": [],
@@ -74,7 +52,7 @@ app.set = function(key, val){
 
 
 //login
-client.login(token);
+client.login();
 module.exports = app;
 
 console.table(bin.setup);
