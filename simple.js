@@ -9,7 +9,7 @@ var config = "./config.json";
 //store all user function
 var bin = {
 	"message": [],
-	"response": {},
+	"echo": {},
 	"setup":{
 		"promptChar": "!",
 		"splitChar": " "
@@ -33,6 +33,8 @@ client.on('ready', () => {
 
 client.on('message', msg => {
 	console.log(`> ${msg.author.tag}@${msg.channel.name?msg.channel.name:"DM"} ${msg.content}`);
+	console.log(`> \tmessage id ${msg.id}`);
+
 	if(msg.content.startsWith(bin.setup.promptChar)){
 		var argv = msg.content.split(bin.setup.splitChar);
 		argv[0] = argv[0].substring(bin.setup.promptChar.length);
@@ -42,9 +44,9 @@ client.on('message', msg => {
 			bin.message[i](msg, argv);
 		}
 
-		//for simple.response
-		if( bin.response[argv[0]] ){
-			msg.reply(bin.response[argv[0]]);
+		//for simple.echo
+		if( bin.echo[argv[0]] ){
+			msg.reply(bin.echo[argv[0]]);
 		}
 	}
 
@@ -59,8 +61,8 @@ app.set = function(key, val){
 	bin.setup[key] = val;
 }
 
-app.response = function(req, res){	
-	bin.response[req] = res;
+app.echo = function(req, res){	
+	bin.echo[req] = res;
 }
 
 app.login = function(token){
