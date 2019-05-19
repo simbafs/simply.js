@@ -3,8 +3,7 @@ var Discord = require('discord.js');
 var client = new Discord.Client();
 
 //include config
-var { token } = require('./ignore/token.json');
-var config = "./config.json";
+//var config = "./config.json";
 
 //store all user function
 var bin = {
