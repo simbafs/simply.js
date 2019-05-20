@@ -58,16 +58,34 @@ app.message = function(fun){
 
 app.set = function(key, val){
 	bin.setup[key] = val;
+	return this;
 }
 
 app.echo = function(req, res){	
 	bin.echo[req] = res;
+	return this;
 }
 
 app.login = function(token){
 	client.login(token);
+	return this;
 }
 
+app.command = function(){
+	return this;
+}
+
+app.shortOptional = function(){
+
+}
+
+app.longOptional = function(){
+
+}
+
+app.action = function(){
+
+}
 
 //login
 module.exports = app;
