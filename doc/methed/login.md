@@ -1,7 +1,7 @@
 **Methed -- login()**
 =====================
 ```js
-simple.login(token)`
+simple.login(token)
   token => token of your bot
 return => simple
 ```
