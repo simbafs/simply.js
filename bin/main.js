@@ -61,8 +61,10 @@ app.set = function(key, val){
 	return this;
 }
 
-app.echo = function(req, res){	
-	bin.echo[req] = res;
+app.echo = function(req, res, config){
+	if(req && res){
+		bin.echo[req] = res;
+	}
 	return this;
 }
 
