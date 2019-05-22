@@ -38,14 +38,30 @@ client.on('message', msg => {
 		var argv = msg.content.split(bin.setup.splitChar);
 		argv[0] = argv[0].substring(bin.setup.promptChar.length);
 		
-		//for simple.message
+		//for app.message
 		for(var i in bin.message){
 			bin.message[i](msg, argv);
 		}
 
-		//for simple.echo
+		//for app.echo
 		if( bin.echo[argv[0]] ){
-			msg.reply(bin.echo[argv[0]]);
+			if(bin.echo[argv[0]].config){
+				let flag = true;
+				let conf = bin.echo[argv[0]].config;
+				let channelId_now = msg.channel.name?msg.channel.id:"DM";
+				//check channel
+				if(conf.channelId && channelId_now !== conf.channelId) flag = false;
+				console.log(`${conf.channelId} ${channelId_now} ${flag}`);
+				//chack author
+				if(conf.authorTag && msg.author.tag !== conf.authorTag) flag = false;
+				console.log(`${conf.authorTag} ${msg.author.tag} ${flag}`);
+
+				if(flag){
+					msg.reply(bin.echo[argv[0]].res);
+				}
+			}else{
+				msg.reply(bin.echo[argv[0]].res);
+			}
 		}
 	}
 
@@ -63,7 +79,13 @@ app.set = function(key, val){
 
 app.echo = function(req, res, config){
 	if(req && res){
-		bin.echo[req] = res;
+		if(config){
+			bin.echo[req] = {res: res, config: config};
+		}else{
+			bin.echo[req] = {res: res};
+		}
+	}else{
+		console.log('> ERROR echo mush have two arguments at least');
 	}
 	return this;
 }
