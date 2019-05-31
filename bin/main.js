@@ -43,7 +43,6 @@ client.on('message', msg => {
 			if(i == argv[0]){
 				bin.message[i](msg, argv);
 			}
-			console.log(i);
 		}
 
 		//for app.echo
