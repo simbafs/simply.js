@@ -7,7 +7,7 @@ var client = new Discord.Client();
 
 //store all user function
 var bin = {
-	"message": [],
+	"message": {},
 	"echo": {},
 	"setup":{
 		"promptChar": "!",
@@ -40,7 +40,9 @@ client.on('message', msg => {
 		
 		//for app.message
 		for(var i in bin.message){
-			bin.message[i](msg, argv);
+			if(bin.message[i] == argv[0]){
+				bin.message[i](msg, argv);
+			}
 		}
 
 		//for app.echo
@@ -68,8 +70,13 @@ client.on('message', msg => {
 });
 
 //def app.ready() require a function
-app.message = function(fun){
-	bin.message.push(fun);
+app.message = function(req,fun){
+	if(!req || !fun){
+		console.log('at simple.message. need two arguments');
+		return this;
+	}
+	bin.message[req] = fun;
+	return this;
 }
 
 app.set = function(key, val){
