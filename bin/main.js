@@ -40,9 +40,10 @@ client.on('message', msg => {
 		
 		//for app.message
 		for(var i in bin.message){
-			if(bin.message[i] == argv[0]){
+			if(i == argv[0]){
 				bin.message[i](msg, argv);
 			}
+			console.log(i);
 		}
 
 		//for app.echo
