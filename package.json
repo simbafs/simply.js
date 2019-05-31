@@ -2,7 +2,7 @@
 	"name": "simple",
 	"version": "1.0.2",
 	"description": "a Discord bot framework",
-	"main": "./main.js",
+	"main": "./bin/main.js",
 	"bin": "./bin/main.js",
 	"scripts": {
 	"test": "nodemon bin/main.js"
