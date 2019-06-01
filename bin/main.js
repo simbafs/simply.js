@@ -1,9 +1,17 @@
 //include discord.js and create a client
+var chalk = require('chalk');
 var {Client, RichEmbed} = require('discord.js');
 var client = new Client();
 
 //include config
 //var config = "./config.json";
+
+//define chalk
+
+const user = chalk.yellow.bold;
+const info = chalk.blueBright;
+const prom = chalk.yellow;
+const mesg  = chalk.cyan;
 
 //store all user function
 var bin = {
@@ -25,14 +33,14 @@ if(process.env.BOT_TOKEN){
 
 //on ready
 client.on('ready', () => {
-	console.log(`=============Loged in as ${client.user.tag } ============`);
-	console.log(`more information on https:\/\/github.com/simba-fs/simple`);
-	console.log(`======================================================`)
+	console.log(prom('============= ') + user(`Login as ${client.user.tag}`) + prom(' =============='));
+	console.log(info('more information on https://github.com/simba-fs/simple'));
+	console.log(prom('======================================================'));
 });
 
 client.on('message', msg => {
-	console.log(`> ${msg.author.tag}@${msg.channel.name?msg.channel.name:"DM"} ${msg.content}`);
-	console.log(`> \tmessage id ${msg.id}`);
+	console.log(prom('> ') + user(msg.author.tag) + prom('@') + user(`${msg.channel.name?msg.channel.name:"DM"}`) + ' ' + mesg(msg.content));
+	console.log(prom('> \tmessage id ') + mesg(msg.id));
 
 	if(msg.content.startsWith(bin.setup.promptChar)){
 		var argv = msg.content.split(bin.setup.splitChar);
@@ -90,10 +98,6 @@ client.on('message', msg => {
 
 //def app.ready() require a function
 app.message = function(req, fun, config){
-	if(!req || !fun){
-		console.log('at simple.message. need two arguments');
-		return this;
-	}
 	if(config){
 		bin.message[req] = {fun: fun, config: config};
 	}else{
@@ -108,14 +112,10 @@ app.set = function(key, val){
 }
 
 app.echo = function(req, res, config){
-	if(req && res){
-		if(config){
-			bin.echo[req] = {res: res, config: config};
-		}else{
-			bin.echo[req] = {res: res};
-		}
+	if(config){
+		bin.echo[req] = {res: res, config: config};
 	}else{
-		console.log('> ERROR echo mush have two arguments at least');
+		bin.echo[req] = {res: res};
 	}
 	return this;
 }
@@ -127,6 +127,3 @@ app.login = function(token){
 
 //login
 module.exports = app;
-
-
-
