@@ -1,6 +1,6 @@
 //include discord.js and create a client
-var Discord = require('discord.js');
-var client = new Discord.Client();
+var {Client, RichEmbed} = require('discord.js');
+var client = new Client();
 
 //include config
 //var config = "./config.json";
@@ -38,26 +38,45 @@ client.on('message', msg => {
 		var argv = msg.content.split(bin.setup.splitChar);
 		argv[0] = argv[0].substring(bin.setup.promptChar.length);
 		
+		
 		//for app.message
-		for(var i in bin.message){
-			if(i == argv[0]){
-				bin.message[i](msg, argv);
+		if(bin.message[argv[0]]){
+			if(bin.message[argv[0]].config){
+				let flag = true;
+				let conf = bin.message[argv[0]].config;
+				let channelId_now = msg.channel.name?msg.channel.id:"DM";
+		
+				//check channel
+				if(conf.channelId && channelId_now !== conf.channelId) flag = false;
+				//console.log(`${conf.channelId} ${channelId_now} ${flag}`);
+		
+				//chack author
+				if(conf.authorTag && msg.author.tag !== conf.authorTag) flag = false;
+				//console.log(`${conf.authorTag} ${msg.author.tag} ${flag}`);
+			
+				if(flag){
+					bin.message[argv[0]].fun(msg,argv);
+				}
+			}else{
+				bin.message[argv[0]].fun(msg,argv);
 			}
 		}
 
 		//for app.echo
-		if( bin.echo[argv[0]] ){
+		if(bin.echo[argv[0]]){
 			if(bin.echo[argv[0]].config){
 				let flag = true;
 				let conf = bin.echo[argv[0]].config;
 				let channelId_now = msg.channel.name?msg.channel.id:"DM";
+		
 				//check channel
 				if(conf.channelId && channelId_now !== conf.channelId) flag = false;
-				console.log(`${conf.channelId} ${channelId_now} ${flag}`);
+				//console.log(`${conf.channelId} ${channelId_now} ${flag}`);
+		
 				//chack author
 				if(conf.authorTag && msg.author.tag !== conf.authorTag) flag = false;
-				console.log(`${conf.authorTag} ${msg.author.tag} ${flag}`);
-
+				//console.log(`${conf.authorTag} ${msg.author.tag} ${flag}`);
+			
 				if(flag){
 					msg.reply(bin.echo[argv[0]].res);
 				}
@@ -70,12 +89,16 @@ client.on('message', msg => {
 });
 
 //def app.ready() require a function
-app.message = function(req,fun){
+app.message = function(req, fun, config){
 	if(!req || !fun){
 		console.log('at simple.message. need two arguments');
 		return this;
 	}
-	bin.message[req] = fun;
+	if(config){
+		bin.message[req] = {fun: fun, config: config};
+	}else{
+		bin.message[req] = {fun: fun};
+	}
 	return this;
 }
 
@@ -102,21 +125,8 @@ app.login = function(token){
 	return this;
 }
 
-app.command = function(){
-	return this;
-}
-
-app.shortOptional = function(){
-
-}
-
-app.longOptional = function(){
-
-}
-
-app.action = function(){
-
-}
-
 //login
 module.exports = app;
+
+
+
