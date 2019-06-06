@@ -97,7 +97,7 @@ client.on('message', msg => {
 });
 
 //def app.ready() require a function
-app.message = function(req, fun, config){
+app.on = function(req, fun, config){
 	if(config){
 		bin.message[req] = {fun: fun, config: config};
 	}else{
