@@ -39,7 +39,6 @@ client.on('ready', () => {
 	for(var i in bin.setup){
 		if(i == 'activity'){
 			client.user.setActivity(bin.setup.activity);
-			console.log(prom('set activity to ' + bin.setup.activity));
 		}	
 	}
 });
