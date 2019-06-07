@@ -125,5 +125,7 @@ app.login = function(token){
 	return this;
 }
 
+app.client = client;
+
 //login
 module.exports = app;
