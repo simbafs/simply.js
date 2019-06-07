@@ -37,7 +37,7 @@ client.on('ready', () => {
 	console.log(info('more information on https://github.com/simba-fs/simple'));
 	console.log(prom('======================================================'));
 	for(var i in bin.setup){
-		if(bin.setup[i] === 'activity'){
+		if(i == 'activity'){
 			client.user.setActivity(bin.setup.activity);
 			console.log(prom('set activity to ' + bin.setup.activity));
 		}	
