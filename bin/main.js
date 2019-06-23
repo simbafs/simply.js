@@ -18,12 +18,13 @@ const mesg  = chalk.cyan;
 
 //store all user function
 var bin = {
-	"message": {},
-	"echo": {},
-	"setup":{
+	message: {},
+	echo: {},
+	setup:{
 		"promptChar": "!",
 		"splitChar": " "
-	}
+	},
+	ready: []
 };
 
 //export module
@@ -115,6 +116,12 @@ em.on('echo', (msg, argv) => {
 	}
 });
 
+em.on('ready', () => {
+	for(var i in bin.ready){
+		bin.ready[i]();
+	}
+});
+
 //def app.ready() require a function
 app.on = function(req, fun, config){
 	if(config){
@@ -141,6 +148,11 @@ app.echo = function(req, res, config){
 
 app.login = function(token){
 	client.login(token);
+	return this;
+}
+
+app.ready = function(fn){
+	bin.ready.push(fn);
 	return this;
 }
 
