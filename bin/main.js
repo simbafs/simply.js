@@ -3,6 +3,9 @@ var chalk = require('chalk');
 var {Client, RichEmbed} = require('discord.js');
 var client = new Client();
 
+var events = require('events');
+var em = new events.EventEmitter();
+
 //include config
 //var config = "./config.json";
 
@@ -41,6 +44,8 @@ client.on('ready', () => {
 			client.user.setActivity(bin.setup.activity);
 		}	
 	}
+	//em.on
+	em.emit('ready');
 });
 
 client.on('message', msg => {
@@ -53,52 +58,61 @@ client.on('message', msg => {
 		
 		
 		//for app.message
-		if(bin.message[argv[0]]){
-			if(bin.message[argv[0]].config){
-				let flag = true;
-				let conf = bin.message[argv[0]].config;
-				let channelId_now = msg.channel.name?msg.channel.id:"DM";
-		
-				//check channel
-				if(conf.channelId && channelId_now !== conf.channelId) flag = false;
-				//console.log(`${conf.channelId} ${channelId_now} ${flag}`);
-		
-				//chack author
-				if(conf.authorTag && msg.author.tag !== conf.authorTag) flag = false;
-				//console.log(`${conf.authorTag} ${msg.author.tag} ${flag}`);
-			
-				if(flag){
-					bin.message[argv[0]].fun(msg,argv);
-				}
-			}else{
-				bin.message[argv[0]].fun(msg,argv);
-			}
-		}
+		em.emit('on', msg, argv);
 
 		//for app.echo
-		if(bin.echo[argv[0]]){
-			if(bin.echo[argv[0]].config){
-				let flag = true;
-				let conf = bin.echo[argv[0]].config;
-				let channelId_now = msg.channel.name?msg.channel.id:"DM";
-		
-				//check channel
-				if(conf.channelId && channelId_now !== conf.channelId) flag = false;
-				//console.log(`${conf.channelId} ${channelId_now} ${flag}`);
-		
-				//chack author
-				if(conf.authorTag && msg.author.tag !== conf.authorTag) flag = false;
-				//console.log(`${conf.authorTag} ${msg.author.tag} ${flag}`);
-			
-				if(flag){
-					msg.reply(bin.echo[argv[0]].res);
-				}
-			}else{
-				msg.reply(bin.echo[argv[0]].res);
-			}
-		}
+		em.emit('echo', msg, argv);
 	}
 
+});
+
+//em.on
+em.on('on',(mag,argv) => {
+	if(bin.message[argv[0]]){
+		if(bin.message[argv[0]].config){
+			let flag = true;
+			let conf = bin.message[argv[0]].config;
+			let channelId_now = msg.channel.name?msg.channel.id:"DM";
+	
+			//check channel
+			if(conf.channelId && channelId_now !== conf.channelId) flag = false;
+			//console.log(`${conf.channelId} ${channelId_now} ${flag}`);
+	
+			//chack author
+			if(conf.authorTag && msg.author.tag !== conf.authorTag) flag = false;
+			//console.log(`${conf.authorTag} ${msg.author.tag} ${flag}`);
+		
+			if(flag){
+				bin.message[argv[0]].fun(msg,argv);
+			}
+		}else{
+			bin.message[argv[0]].fun(msg,argv);
+		}
+	}
+});
+
+em.on('echo', (msg, argv) => {
+	if(bin.echo[argv[0]]){
+		if(bin.echo[argv[0]].config){
+			let flag = true;
+			let conf = bin.echo[argv[0]].config;
+			let channelId_now = msg.channel.name?msg.channel.id:"DM";
+	
+			//check channel
+			if(conf.channelId && channelId_now !== conf.channelId) flag = false;
+			//console.log(`${conf.channelId} ${channelId_now} ${flag}`);
+	
+			//chack author
+			if(conf.authorTag && msg.author.tag !== conf.authorTag) flag = false;
+			//console.log(`${conf.authorTag} ${msg.author.tag} ${flag}`);
+		
+			if(flag){
+				msg.reply(bin.echo[argv[0]].res);
+			}
+		}else{
+			msg.reply(bin.echo[argv[0]].res);
+		}
+	}
 });
 
 //def app.ready() require a function
