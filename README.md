@@ -1,4 +1,4 @@
 Simple
 ======
 Made by [simba-fs](https://github.com/simba-fs)
-* full [document](./doc/contents.md)
+* full [document](https://github.com/simba-fs/simple-wiki)
