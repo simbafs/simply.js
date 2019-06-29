@@ -68,7 +68,7 @@ client.on('message', msg => {
 });
 
 //em.on
-em.on('on',(mag,argv) => {
+em.on('on',(msg,argv) => {
 	if(bin.message[argv[0]]){
 		if(bin.message[argv[0]].config){
 			let flag = true;
