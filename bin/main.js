@@ -37,8 +37,8 @@ if(process.env.BOT_TOKEN){
 }
 
 //new Member
-client.on('guildMemberAdd', () => {
-	em.emit('newMember');
+client.on('guildMemberAdd', (user) => {
+	em.emit('newMember', user);
 });
 
 //on ready
@@ -128,9 +128,9 @@ em.on('ready', () => {
 	}
 });
 
-em.on('newMember', () => {
+em.on('newMember', (user) => {
 	for(var i in bin.newMember){
-		bin.newMember[i]();
+		bin.newMember[i](user);
 	}
 });
 
