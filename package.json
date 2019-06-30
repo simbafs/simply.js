@@ -23,7 +23,8 @@
 	"homepage": "https://github.com/simba-fs/simple#readme",
 	"dependencies": {
 		"clalk": "^1.0.0",
-		"discord.js": "^11.4.2"
+		"discord.js": "^11.4.2",
+		"dotenv": "^8.0.0"
 	},
 	"devDependencies": {
 		"nodemon": "^1.19.0"
