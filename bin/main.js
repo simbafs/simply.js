@@ -24,7 +24,8 @@ var bin = {
 		"promptChar": "!",
 		"splitChar": " "
 	},
-	ready: []
+	ready: [],
+	newMember: []
 };
 
 //export module
@@ -34,6 +35,11 @@ var app = new Object;
 if(process.env.BOT_TOKEN){
 	token = process.env.BOT_TOKEN;//for glitch
 }
+
+//new Member
+client.on('guildMemberAdd', () => {
+	em.emit('newMember');
+});
 
 //on ready
 client.on('ready', () => {
@@ -119,6 +125,12 @@ em.on('echo', (msg, argv) => {
 em.on('ready', () => {
 	for(var i in bin.ready){
 		bin.ready[i]();
+	}
+});
+
+em.on('newMember', () => {
+	for(var i in bin.newMember){
+		bin.newMember[i]();
 	}
 });
 
