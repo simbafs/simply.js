@@ -14,19 +14,9 @@ var em = new events.EventEmitter();
 const user = chalk.yellow.bold;
 const info = chalk.blueBright;
 const prom = chalk.yellow;
-const mesg  = chalk.cyan;
+const mesg = chalk.cyan;
 
-//store all user function
-var bin = {
-	message: {},
-	echo: {},
-	setup:{
-		"promptChar": "!",
-		"splitChar": " "
-	},
-	ready: [],
-	newMember: []
-};
+var {bin, em} = require('./em.js');
 
 //export module
 var app = new Object;
@@ -43,7 +33,13 @@ client.on('guildMemberAdd', (user) => {
 
 //on ready
 client.on('ready', () => {
-	console.log(prom('============= ') + user(`Login as ${client.user.tag}`) + prom(' =============='));
+	function repeat(n){
+		let r = "";
+		for(let i )
+	}
+	let tag = client.user.tag;
+	let len = tag.length();
+	console.log(prom(`${} `) + user(`Login as ${client.user.tag}`));
 	console.log(info('more information on https://github.com/simba-fs/simple'));
 	console.log(prom('======================================================'));
 	for(var i in bin.setup){
@@ -71,67 +67,6 @@ client.on('message', msg => {
 		em.emit('echo', msg, argv);
 	}
 
-});
-
-//em.on
-em.on('on',(msg,argv) => {
-	if(bin.message[argv[0]]){
-		if(bin.message[argv[0]].config){
-			let flag = true;
-			let conf = bin.message[argv[0]].config;
-			let channelId_now = msg.channel.name?msg.channel.id:"DM";
-	
-			//check channel
-			if(conf.channelId && channelId_now !== conf.channelId) flag = false;
-			//console.log(`${conf.channelId} ${channelId_now} ${flag}`);
-	
-			//chack author
-			if(conf.authorTag && msg.author.tag !== conf.authorTag) flag = false;
-			//console.log(`${conf.authorTag} ${msg.author.tag} ${flag}`);
-		
-			if(flag){
-				bin.message[argv[0]].fun(msg,argv);
-			}
-		}else{
-			bin.message[argv[0]].fun(msg,argv);
-		}
-	}
-});
-
-em.on('echo', (msg, argv) => {
-	if(bin.echo[argv[0]]){
-		if(bin.echo[argv[0]].config){
-			let flag = true;
-			let conf = bin.echo[argv[0]].config;
-			let channelId_now = msg.channel.name?msg.channel.id:"DM";
-	
-			//check channel
-			if(conf.channelId && channelId_now !== conf.channelId) flag = false;
-			//console.log(`${conf.channelId} ${channelId_now} ${flag}`);
-	
-			//chack author
-			if(conf.authorTag && msg.author.tag !== conf.authorTag) flag = false;
-			//console.log(`${conf.authorTag} ${msg.author.tag} ${flag}`);
-		
-			if(flag){
-				msg.reply(bin.echo[argv[0]].res);
-			}
-		}else{
-			msg.reply(bin.echo[argv[0]].res);
-		}
-	}
-});
-
-em.on('ready', () => {
-	for(var i in bin.ready){
-		bin.ready[i]();
-	}
-});
-
-em.on('newMember', (user) => {
-	for(var i in bin.newMember){
-		bin.newMember[i](user);
-	}
 });
 
 //def app.ready() require a function
