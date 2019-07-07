@@ -6,9 +6,6 @@ var client = new Client();
 var events = require('events');
 var em = new events.EventEmitter();
 
-//include config
-//var config = "./config.json";
-
 //define chalk
 
 const user = chalk.yellow.bold;
@@ -35,11 +32,15 @@ client.on('guildMemberAdd', (user) => {
 client.on('ready', () => {
 	function repeat(n){
 		let r = "";
-		for(let i )
+		for(let i = 0; i < n; i++, r+="=");
+		return r;
 	}
 	let tag = client.user.tag;
-	let len = tag.length();
-	console.log(prom(`${} `) + user(`Login as ${client.user.tag}`));
+	debugger;
+	let len = tag.length;
+	let a = Math.floor((43 - len)/2);
+	let b = 43 - len - a;
+	console.log(prom(`${repeat(a)} `) + user(`Login as ${client.user.tag}`) + prom(` ${repeat(b)}`));
 	console.log(info('more information on https://github.com/simba-fs/simple'));
 	console.log(prom('======================================================'));
 	for(var i in bin.setup){
