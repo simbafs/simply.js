@@ -12,6 +12,7 @@ const user = chalk.yellow.bold;
 const info = chalk.blueBright;
 const prom = chalk.yellow;
 const mesg = chalk.cyan;
+const err  = chalk.red;
 
 var {bin, em} = require('./em.js');
 
@@ -70,8 +71,10 @@ client.on('message', msg => {
 
 });
 
+
+
 //def app.ready() require a function
-app.on = function(req, fun, config){
+app.cmd = function(req, fun, config){
 	if(config){
 		bin.message[req] = {fun: fun, config: config};
 	}else{
@@ -96,6 +99,21 @@ app.echo = function(req, res, config){
 
 app.login = function(token){
 	client.login(token);
+	return this;
+}
+
+app.on(events, fn){
+	if(!events || !fn){
+		console.log(err('simple.on miss something'));
+		return this;
+	}
+	switch(events){
+		case 'ready':
+			bin.ready.push(fn);
+			break;
+		default:
+			console.log(err(`event: ${events} doesn't not exist`));
+	}
 	return this;
 }
 
