@@ -102,7 +102,7 @@ app.login = function(token){
 	return this;
 }
 
-app.on(events, fn){
+app.on = function(events, fn){
 	if(!events || !fn){
 		console.log(err('simple.on miss something'));
 		return this;
