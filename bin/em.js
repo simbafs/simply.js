@@ -6,7 +6,7 @@ var bin = {
 	message: {},
 	echo: {},
 	setup:{
-		"promptChar": "!",
+		"prefix": "!",
 		"splitChar": " "
 	},
 	ready: [],

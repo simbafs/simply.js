@@ -57,9 +57,9 @@ client.on('message', msg => {
 	console.log(prom('> ') + user(msg.author.tag) + prom('@') + user(`${msg.channel.name?msg.channel.name:"DM"}`) + ' ' + mesg(msg.content));
 	console.log(prom('> \tmessage id ') + mesg(msg.id));
 
-	if(msg.content.startsWith(bin.setup.promptChar)){
+	if(msg.content.startsWith(bin.setup.prefix)){
 		var argv = msg.content.split(bin.setup.splitChar);
-		argv[0] = argv[0].substring(bin.setup.promptChar.length);
+		argv[0] = argv[0].substring(bin.setup.prefix.length);
 		
 		
 		//for app.message
