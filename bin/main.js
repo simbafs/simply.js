@@ -39,11 +39,11 @@ client.on('ready', () => {
 	let tag = client.user.tag;
 	debugger;
 	let len = tag.length;
-	let a = Math.floor((43 - len)/2);
-	let b = 43 - len - a;
+	let a = Math.floor((45 - len)/2);
+	let b = 45 - len - a;
 	console.log(prom(`${repeat(a)} `) + user(`Login as ${client.user.tag}`) + prom(` ${repeat(b)}`));
-	console.log(info('more information on https://github.com/simba-fs/simple'));
-	console.log(prom('======================================================'));
+	console.log(info('more information on https://github.com/simba-fs/simply.js'));
+	console.log(prom('========================================================='));
 	for(var i in bin.setup){
 		if(i == 'activity'){
 			client.user.setActivity(bin.setup.activity);
